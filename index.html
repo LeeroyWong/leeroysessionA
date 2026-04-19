@@ -1025,18 +1025,13 @@ form.addEventListener('submit',function(e){
   img.src = url;
   
   setTimeout(function(){
-      
     formWrapper.style.display='none';
     successMsg.style.display='block';
     toast.style.display='block';
-    setTimeout(()=>toast.style.display='none',3500);
-  }catch(err){
-    formWrapper.style.display='none';
-    successMsg.style.display='block';
-    toast.style.display='block';
-    setTimeout(()=>toast.style.display='none',3500);
-  }
+    setTimeout(function(){toast.style.display='none';},3500);
+  }, 1500);
 });
+    
 
 // Scroll reveal
 const observer=new IntersectionObserver((entries)=>{
