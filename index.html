@@ -249,14 +249,18 @@ nav,section,.hero,.tagline,.about-section,.final-cta,footer,.b2b-section>*{posit
 /* 大card图片 */
 .media-card.featured img{
   width:100%;height:320px;
-  object-fit:cover;object-position:top center;
+  object-fit:contain;
+  object-position:center;
   background:#1a1a1a;display:block;
+  padding:12px;
 }
 /* 小card图片 */
 .media-card.small img{
-  width:100%;height:200px;
-  object-fit:cover;object-position:top center;
+  width:100%;height:220px;
+  object-fit:contain;
+  object-position:center;
   background:#1a1a1a;display:block;
+  padding:8px;
 }
 
 .media-card-body{padding:24px 28px 30px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
@@ -926,7 +930,7 @@ footer small{font-size:12px;color:rgba(255,255,255,0.2);width:100%;text-align:ce
   .hero-content{padding:0 24px 100px}
   .hero h1{font-size:44px;letter-spacing:-1.5px}
   .hero-sub{font-size:16px}
-  .hero-img{width:100%;opacity:0.25}
+  .hero-img{width:100%;height:60%;opacity:0.4;object-position:top center;top:0}
   .hero-stats{right:24px;bottom:100px;gap:20px}
   .hero-stat-num{font-size:24px}
   .hero-stat-label{font-size:10px}
