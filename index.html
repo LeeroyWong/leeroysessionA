@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>html{scroll-behavior:auto !important}</style>
 <title>Session A · Leeroy Wong</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -1577,9 +1578,11 @@ footer small{font-size:12px;color:rgba(255,255,255,0.2);width:100%;text-align:ce
 <script>
 // 强制回到顶部（兼容手机）
 if(history.scrollRestoration){history.scrollRestoration="manual";}
-window.scrollTo(0,0);
-document.addEventListener('DOMContentLoaded',function(){window.scrollTo(0,0);});
-window.addEventListener('load',function(){window.scrollTo(0,0);});
+window.scrollTo({top:0,left:0,behavior:'instant'});
+document.addEventListener('DOMContentLoaded',function(){window.scrollTo({top:0,left:0,behavior:'instant'});});
+window.addEventListener('load',function(){
+  setTimeout(function(){window.scrollTo({top:0,left:0,behavior:'instant'});},50);
+});
 
 // FAQ
 document.querySelectorAll('.faq-q').forEach(q=>{
