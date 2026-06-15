@@ -1554,16 +1554,16 @@ form.addEventListener('submit',async function(e){
     remarks: form.querySelector('[name="remarks"]') ? form.querySelector('[name="remarks"]').value : ''
   };
   
-  var url = 'https://script.google.com/macros/s/AKfycbwI8sXq6ak1TuXGrmyUxjzDky0WOEjj9RM_JwykIORcahMpvdAjj5s8UxHhMzg7pLuv9Q/exec';
+  var url = 'https://script.google.com/macros/s/AKfycbwZ3csiAh1VGExKtu2tt3dj6f6xouF26jcqVcjS_7Sh9p955KN6iCIT5Qm7WoSVDiJbOA/exec';
+
+  var params = Object.keys(fields).map(function(k){
+    return encodeURIComponent(k)+'='+encodeURIComponent(fields[k]);
+  }).join('&');
+
+  var fullUrl = url + '?' + params;
 
 try{
-    const res=await fetch(url,{
-      method:'POST',
-      body: JSON.stringify(fields),
-      headers:{'Content-Type':'application/json'}
-    });
-
-    if(!res.ok) throw new Error('Server error: '+res.status);
+    await fetch(fullUrl, {method:'GET', mode:'no-cors'});
 
     formWrapper.style.display='none';
     successMsg.style.display='block';
