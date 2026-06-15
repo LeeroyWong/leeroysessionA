@@ -1542,32 +1542,25 @@ form.addEventListener('submit',async function(e){
   
   var fields={
     name: form.querySelector('[name="name"]').value,
-    phone: form.querySelector('[name="phone"]').value,
+    whatsapp: form.querySelector('[name="phone"]').value,
     email: form.querySelector('[name="email"]').value,
     location: form.querySelector('[name="location"]').value,
     occupation: form.querySelector('[name="occupation"]').value,
-    content_status: form.querySelector('[name="content_status"]').value,
+    platform: form.querySelector('[name="content_status"]').value,
     goal: form.querySelector('[name="goal"]').value,
-    budget: '',
     challenge: form.querySelector('[name="challenge"]').value,
     expectation: form.querySelector('[name="expectation"]').value,
     source: form.querySelector('[name="source"]') ? form.querySelector('[name="source"]').value : '',
-    session_type: form.querySelector('[name="session_type"]') ? form.querySelector('[name="session_type"]').value : ''
+    remarks: form.querySelector('[name="remarks"]') ? form.querySelector('[name="remarks"]').value : ''
   };
   
-  var params = Object.keys(fields).map(function(k){
-    return encodeURIComponent(k)+'='+encodeURIComponent(fields[k]);
-  }).join('&');
-  
-  var url = 'https://script.google.com/macros/s/AKfycbwhibXgVf4FxR1deocBo6SJdfqZ4RYVFPF-GuowCstsSwYrmqrJ-zqaHtIirCZovJzFqA/exec?'+params;
-  
-  // var img = new Image();
-  // img.src = url;
+  var url = 'https://script.google.com/macros/s/AKfycbwI8sXq6ak1TuXGrmyUxjzDky0WOEjj9RM_JwykIORcahMpvdAjj5s8UxHhMzg7pLuv9Q/exec';
 
 try{
     const res=await fetch(url,{
-      method:'GET',
-      headers:{'Accept':'application/json'}
+      method:'POST',
+      body: JSON.stringify(fields),
+      headers:{'Content-Type':'application/json'}
     });
 
     if(!res.ok) throw new Error('Server error: '+res.status);
