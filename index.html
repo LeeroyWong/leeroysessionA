@@ -1428,12 +1428,22 @@ footer small{font-size:12px;color:rgba(255,255,255,0.2);width:100%;text-align:ce
           <label>所在地区 <span class="req">*</span></label>
           <select name="location" required>
             <option value="" disabled selected>请选择</option>
-            <option>吉隆坡 / 雪兰莪</option>
+            <option>吉隆坡</option>
+            <option>雪兰莪</option>
             <option>槟城</option>
             <option>柔佛</option>
             <option>霹雳</option>
-            <option>沙巴 / 砂拉越</option>
-            <option>其他州份</option>
+            <option>森美兰</option>
+            <option>马六甲</option>
+            <option>彭亨</option>
+            <option>吉打</option>
+            <option>玻璃市</option>
+            <option>登嘉楼</option>
+            <option>吉兰丹</option>
+            <option>沙巴</option>
+            <option>砂拉越</option>
+            <option>纳闽</option>
+            <option>布城</option>
           </select>
         </div>
         <div class="form-group">
@@ -1446,7 +1456,7 @@ footer small{font-size:12px;color:rgba(255,255,255,0.2);width:100%;text-align:ce
         </div>
         <div class="form-group">
           <label>你想做内容的主要目的 <span class="req">*</span></label>
-          <select name="goal" required>
+          <select name="goal" required onchange="document.getElementById('goalOtherWrap').style.display=(this.value==='其他')?'block':'none'">
             <option value="" disabled selected>请选择</option>
             <option>建立个人品牌</option>
             <option>推广业务 / 产品</option>
@@ -1454,6 +1464,9 @@ footer small{font-size:12px;color:rgba(255,255,255,0.2);width:100%;text-align:ce
             <option>转型成为内容创作者</option>
             <option>其他</option>
           </select>
+          <div id="goalOtherWrap" style="display:none;margin-top:12px">
+            <input type="text" name="goal_other" placeholder="请填写具体内容">
+          </div>
         </div>
         <div class="form-group">
           <label>你最大的困难是什么？</label>
@@ -1547,7 +1560,14 @@ form.addEventListener('submit',async function(e){
     location: form.querySelector('[name="location"]').value,
     occupation: form.querySelector('[name="occupation"]').value,
     platform: form.querySelector('[name="content_status"]').value,
-    goal: form.querySelector('[name="goal"]').value,
+    goal: (function(){
+      var g = form.querySelector('[name="goal"]').value;
+      if(g==='其他'){
+        var other = form.querySelector('[name="goal_other"]').value;
+        return other ? ('其他：'+other) : '其他';
+      }
+      return g;
+    })(),
     challenge: form.querySelector('[name="challenge"]').value,
     expectation: form.querySelector('[name="expectation"]').value,
     source: form.querySelector('[name="source"]') ? form.querySelector('[name="source"]').value : '',
