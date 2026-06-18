@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1对1学员 Debrief 笔记</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #FAF9F4;
+    font-family: Arial, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #2C2C2A;
+  }
+  .page { max-width: 700px; margin: 0 auto; padding: 20px 16px 60px; }
+  .banner {
+    background: #545B30;
+    color: #fff;
+    text-align: center;
+    padding: 20px 16px 16px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+  }
+  .banner h1 { margin: 0 0 4px; font-size: 20px; font-weight: bold; }
+  .banner .sub { margin: 0; font-size: 13px; color: #E8EAD9; font-style: italic; }
+  .instructions {
+    background: #F4F3EE;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: #555550;
+    line-height: 1.6;
+  }
+  .instructions p { margin: 4px 0; }
+  .meta-grid {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .meta-grid label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #3D4022;
+    background: #E8EAD9;
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .meta-grid input, .meta-grid select {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 9px 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 15px;
+    background: #fff;
+    color: #2C2C2A;
+    font-weight: normal;
+  }
+  .section-banner {
+    background: #545B30;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 22px 0 12px;
+  }
+  .followup-tint {
+    background: #F0E6DA;
+    color: #6B4A2B;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    padding: 7px 10px;
+    border-radius: 5px;
+    margin: 16px 0 12px;
+  }
+  .q { display: block; font-size: 14px; font-weight: bold; color: #3D4022; margin: 14px 0 6px; }
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 64px;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #2C2C2A;
+    resize: vertical;
+  }
+  .actions { margin-top: 26px; display: flex; gap: 10px; flex-wrap: wrap; }
+  button {
+    flex: 1;
+    min-width: 140px;
+    padding: 13px 16px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+  }
+  #copyBtn { background: #545B30; color: #fff; }
+  #copyBtn:hover { background: #454B27; }
+  #resetBtn { background: transparent; color: #555; border: 1px solid #AAA; }
+  #status { text-align: center; font-size: 13px; margin-top: 10px; min-height: 18px; color: #2E7D32; }
+  #status.warn { color: #A33; }
+  #output {
+    display: none;
+    width: 100%;
+    min-height: 160px;
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 13px;
+    font-family: monospace;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner">
+    <h1>1对1学员 Debrief 笔记</h1>
+    <p class="sub">LeeroyWong Production</p>
+  </div>
+
+  <div class="instructions">
+    <p>1. 实战课结束当天,先填好「学生背景」「卡点」「转折点/方法」「原话引用」,以及「转变结果」的第一段。</p>
+    <p>2. 30天跟进结束后,回来补上「转变结果」里"30天跟进后补充"的部分。</p>
+    <p>3. 填好之后按下面的「复制整份内容」,贴给Claude处理,或存进Project的知识库。</p>
+  </div>
+
+  <div class="meta-grid">
+    <label>学生代号/姓名
+      <input type="text" id="meta_name">
+    </label>
+    <label>上课日期
+      <input type="date" id="meta_date">
+    </label>
+    <label>30天跟进截止日期
+      <input type="date" id="meta_followup_date">
+    </label>
+    <label>是否同意分享案例
+      <select id="meta_consent">
+        <option value="">请选择</option>
+        <option value="匿名">匿名</option>
+        <option value="具名">具名</option>
+        <option value="不公开">不公开</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="section-banner">01　学生背景</div>
+  <label class="q">学生是谁(职业/行业/身份背景):</label>
+  <textarea id="s1_q1"></textarea>
+  <label class="q">怎么认识Leeroy/透过什么内容找到我们的:</label>
+  <textarea id="s1_q2"></textarea>
+  <label class="q">报名1对1当下最想解决的具体目标:</label>
+  <textarea id="s1_q3"></textarea>
+
+  <div class="section-banner">02　卡点(上课前卡在哪里)</div>
+  <label class="q">具体卡住的情境(哪一次、哪句话、哪个决定——不是泛泛的形容):</label>
+  <textarea id="s2_q1"></textarea>
+  <label class="q">这个卡点维持多久了:</label>
+  <textarea id="s2_q2" style="min-height:40px"></textarea>
+  <label class="q">之前自己或透过别人试过什么方法,为什么没解决:</label>
+  <textarea id="s2_q3"></textarea>
+
+  <div class="section-banner">03　转折点/方法(Leeroy当场用了什么)</div>
+  <label class="q">Leeroy当场问的关键问题/用的练习或框架:</label>
+  <textarea id="s3_q1"></textarea>
+  <label class="q">学生当下的反应(停顿、表情、语气变化等细节,越具体越好):</label>
+  <textarea id="s3_q2"></textarea>
+  <label class="q">这套方法的名称(如果Leeroy自己有命名):</label>
+  <textarea id="s3_q3" style="min-height:40px"></textarea>
+
+  <div class="section-banner">04　转变结果</div>
+  <label class="q">课程结束当下,学生自己怎么形容这个改变:</label>
+  <textarea id="s4_q1"></textarea>
+
+  <div class="followup-tint">—— 30天跟进后补充 ——</div>
+  <label class="q">30天跟进期间具体发生的行为变化(开始做什么、停掉什么、有没有具体成果或数字):</label>
+  <textarea id="s4_q2"></textarea>
+  <label class="q">Leeroy或学生自己觉得最关键的转变点是哪一刻:</label>
+  <textarea id="s4_q3"></textarea>
+
+  <div class="section-banner">05　原话引用</div>
+  <label class="q">学员原话:</label>
+  <textarea id="s5_q1"></textarea>
+  <label class="q">Leeroy原话:</label>
+  <textarea id="s5_q2"></textarea>
+
+  <div class="actions">
+    <button id="copyBtn">复制整份内容</button>
+    <button id="resetBtn">清空表单</button>
+  </div>
+  <p id="status"></p>
+  <textarea id="output" readonly></textarea>
+
+</div>
+
+<script>
+function val(id) {
+  var el = document.getElementById(id);
+  var v = el.value.trim();
+  return v.length ? v : "(未填)";
+}
+
+function buildText() {
+  var lines = [];
+  lines.push("学生代号/姓名: " + val("meta_name"));
+  lines.push("上课日期: " + val("meta_date"));
+  lines.push("30天跟进截止日期: " + val("meta_followup_date"));
+  lines.push("是否同意分享案例: " + val("meta_consent"));
+  lines.push("");
+  lines.push("【学生背景】");
+  lines.push("学生是谁(职业/行业/身份背景): " + val("s1_q1"));
+  lines.push("怎么认识Leeroy/透过什么内容找到我们的: " + val("s1_q2"));
+  lines.push("报名1对1当下最想解决的具体目标: " + val("s1_q3"));
+  lines.push("");
+  lines.push("【卡点(上课前卡在哪里)】");
+  lines.push("具体卡住的情境: " + val("s2_q1"));
+  lines.push("这个卡点维持多久了: " + val("s2_q2"));
+  lines.push("之前试过什么方法,为什么没解决: " + val("s2_q3"));
+  lines.push("");
+  lines.push("【转折点/方法(Leeroy当场用了什么)】");
+  lines.push("Leeroy当场问的关键问题/用的练习或框架: " + val("s3_q1"));
+  lines.push("学生当下的反应: " + val("s3_q2"));
+  lines.push("这套方法的名称: " + val("s3_q3"));
+  lines.push("");
+  lines.push("【转变结果】");
+  lines.push("课程结束当下,学生自己怎么形容这个改变: " + val("s4_q1"));
+  lines.push("—— 30天跟进后补充 ——");
+  lines.push("30天跟进期间具体发生的行为变化: " + val("s4_q2"));
+  lines.push("最关键的转变点是哪一刻: " + val("s4_q3"));
+  lines.push("");
+  lines.push("【原话引用】");
+  lines.push("学员原话: " + val("s5_q1"));
+  lines.push("Leeroy原话: " + val("s5_q2"));
+  return lines.join("\n");
+}
+
+function showStatus(msg, warn) {
+  var s = document.getElementById("status");
+  s.textContent = msg;
+  s.className = warn ? "warn" : "";
+}
+
+document.getElementById("copyBtn").addEventListener("click", function () {
+  var text = buildText();
+  var outputEl = document.getElementById("output");
+  outputEl.value = text;
+
+  function manualFallback(msg) {
+    outputEl.style.display = "block";
+    outputEl.focus();
+    outputEl.select();
+    showStatus(msg, true);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function () {
+      showStatus("已复制!直接贴回去给Claude就行。", false);
+    }).catch(function () {
+      try {
+        outputEl.style.display = "block";
+        outputEl.select();
+        var ok = document.execCommand("copy");
+        if (ok) {
+          showStatus("已复制!直接贴回去给Claude就行。", false);
+        } else {
+          manualFallback("自动复制失败,文字已经选好了,按 Ctrl+C(Mac: Cmd+C)手动复制。");
+        }
+      } catch (e) {
+        manualFallback("自动复制失败,文字已经选好了,按 Ctrl+C(Mac: Cmd+C)手动复制。");
+      }
+    });
+  } else {
+    try {
+      outputEl.style.display = "block";
+      outputEl.select();
+      var ok2 = document.execCommand("copy");
+      if (ok2) {
+        showStatus("已复制!直接贴回去给Claude就行。", false);
+      } else {
+        manualFallback("自动复制失败,文字已经选好了,按 Ctrl+C(Mac: Cmd+C)手动复制。");
+      }
+    } catch (e2) {
+      manualFallback("自动复制失败,文字已经选好了,按 Ctrl+C(Mac: Cmd+C)手动复制。");
+    }
+  }
+});
+
+document.getElementById("resetBtn").addEventListener("click", function () {
+  var inputs = document.querySelectorAll(".page input, .page textarea, .page select");
+  inputs.forEach(function (el) {
+    if (el.id !== "output") el.value = "";
+  });
+  document.getElementById("output").style.display = "none";
+  showStatus("");
+});
+</script>
+</body>
+</html>
